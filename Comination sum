@@ -1,0 +1,27 @@
+class Solution {
+     List<List<Integer>> mainlist = new ArrayList<>();
+      List<Integer> list = new ArrayList<>();
+     public void helper(int k,int n , List<Integer> list,int num,int sum){
+
+if(num>10 || sum>n ||k<0){
+    return ;
+}
+
+if(k==0 && sum==n){
+    mainlist.add( new ArrayList<>(list));
+    return;
+}
+list.add(num);
+helper(k-1,n,list,num+1,sum+num);
+list.remove(list.size()-1);
+helper(k,n,list,num+1,sum);
+
+     }
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<Integer> list = new ArrayList<>();
+        helper(k,n,list,1,0);
+     
+         return mainlist;
+        
+    }
+}
