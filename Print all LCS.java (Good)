@@ -1,0 +1,77 @@
+// User function Template for Java
+
+class Solution {
+    
+    
+    public String getAny(Set<String> set){
+        if(set.size()==0){
+            return "";
+        }
+        
+        for(String str : set){
+            return str;
+        }
+        return "";
+    }
+    
+    
+    
+    public List<String> allLCS(String s1, String s2) {
+        // Code here
+      Set<String>dp[][] = new HashSet[s1.length()+1][s2.length()+1];
+    for(int i =0;i<=s1.length();i++){
+        for(int j =0;j<=s2.length();j++){
+            dp[i][j]=new HashSet<>();
+        }
+    }
+        for(int i =0;i<=s1.length();i++){
+          dp[i][0].add("");
+      }
+      for(int i =0;i<=s2.length();i++){
+          dp[0][i].add("");
+      }
+      
+      for(int i=1;i<=s1.length();i++){
+          for(int j =1;j<=s2.length();j++){
+              
+              if(s1.charAt(i-1)==s2.charAt(j-1)){
+                  char ch = s1.charAt(i-1);
+                 
+                  
+                  for(String str : dp[i-1][j-1]){
+                      dp[i][j].add(str+ch);
+                  }
+              }
+              else{
+                  int len1 = getAny(dp[i-1][j]).length();
+                  int len2 = getAny(dp[i][j-1]).length();
+                  
+                  if(len1>len2){
+                      dp[i][j].addAll(dp[i-1][j]);
+                  }
+                  else if(len2>len1){
+                      dp[i][j].addAll(dp[i][j-1]);
+                  }
+                  else{
+                       dp[i][j].addAll(dp[i-1][j]);
+                        dp[i][j].addAll(dp[i][j-1]);
+                      
+                  }
+                  
+                
+              }
+              
+              
+          }
+      }
+      
+      List<String>list = new ArrayList<>(dp[s1.length()][s2.length()]);
+      
+        Collections.sort(list);
+      
+      return list;
+      
+      
+     
+    }
+}
